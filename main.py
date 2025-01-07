@@ -1,6 +1,32 @@
 from graphics import *
 
-class Main:
+class ItemManage:
+    """"""
+    def add_items(self, key, value):
+        self._items[key] = [value, {}]
+    
+    def _convert_coords(self, Ax, Ay, Bx, By, x, y):
+        left = min(Ax, Bx)
+        right = max(Ax, Bx)
+        top = min(Ay, By)
+        bottom = max(Ay, By)
+
+        if left <= x <= right and top <= y <= bottom:
+            return True
+        
+        return False
+    
+    def process_click(self, keyA, keyB, cords, item):
+        self._items[keyA][1][keyB] = {'coordinates': cords, 'function': item}
+    
+    def verify_click(self, keyA, x, y):
+        for coords in self._items[keyA][1].values():
+            Ax, Ay, Bx, By = coords['coordinates']
+            if self._convert_coords(Ax, Ay, Bx, By, x, y):
+                coords['function'][0].draw(self.engine)
+
+
+class Main(ItemManage):
     def __init__(self, TITLE: str, RESOLUTION: tuple):
         self.engine = GraphWin(TITLE, RESOLUTION[0], RESOLUTION[1])
         self._items = {}
@@ -8,21 +34,14 @@ class Main:
     def draw_items(self, position, width, height, path, key):
         items = Image(Point(position[0] + width / 2, position[1] + height / 2), path)
         items.draw(self.engine)
-        self._add_items(key, items)
+        self.add_items(key, items)
     
     def draw_fontes(self, ):
         ...
-    
-    def _add_items(self, key, value):
-        if self._items.get(key):
-            self._items[key].append(value)
-        else:
-            self._items[key] = [value, {}]
+                
+    @property
+    def items(self):
+        return self._items
 
 
-main = Main('DREAMPORT', (1277, 720))
-
-while True:
-    main.draw_items((0, 0), 1280, 720, 'image\homepage1.ppm', 'homepage')
-    position = main.engine.getMouse()
-    print(f'X: {position.getX()}, Y: {position.getY()}')
+main = Main('DREAMPORT', (1280, 720))
