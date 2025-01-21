@@ -114,24 +114,47 @@ class FileProduct:
 main = Main(TITLE, SCREEN_RESOLUTION)
 
 # Carregando as imagens de cada página
-main.set_current_screen('login')
-main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, LOGIN_IMG, 'login')
-main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, HOMEPAGE_IMG, 'homepage')
+main.set_current_screen('inicio')
+main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, HOMEPAGE_IMG, 'inicio')
 main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, MENU_IMG, 'menu')
-main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, PRODUCT_IMAGE, 'product')
+main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, PRODUCT_IMAGE, 'produto')
+main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, ABOUT_IMG, 'sobre')
+main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, CART_IMG, 'carrinho')
 
-# Página de Login
-main.process_click('login', 'button_pass', LOGIN_PASS_COORDS, LOGIN_PASS_ANI , 'homepage')
+# Áreas clicaveis - inicio
+main.process_click('inicio', 'botao_menu', HOMEPAGE_MENU_COORDS, HOMEPAGE_MENU_ANI, 'menu')
+main.process_click('inicio', 'botao_secao', HOMEPAGE_SECAO_COORDS, HOMEPAGE_SECAO_ANI, 'secao')
+main.process_click('inicio', 'botao_inicio', HOMEPAGE_INICIO_COORDS, HOMEPAGE_INICIO_ANI, 'inicio')
+main.process_click('inicio', 'botao_secao', HOMEPAGE_CARRINHO_COORDS, HOMEPAGE_CARRINHO_ANI, 'carrinho')
+main.process_click('inicio', 'botao_sobre', HOMEPAGE_SOBRE_COORDS, HOMEPAGE_SOBRE_ANI, 'sobre')
+main.process_click('inicio', 'produto1', HOMEPAGE_PRODUCT1_COORDS, HOMEPAGE_IMG, 'produto')
+main.process_click('inicio', 'produto2', HOMEPAGE_PRODUCT2_COORDS, HOMEPAGE_IMG, 'produto')
+main.process_click('inicio', 'produto3', HOMEPAGE_PRODUCT3_COORDS, HOMEPAGE_IMG, 'produto')
+main.process_click('inicio', 'produto4', HOMEPAGE_PRODUCT4_COORDS, HOMEPAGE_IMG, 'produto')
 
-# Homepage
-main.process_click('homepage', 'button_menu', HOMEPAGE_MENU_COORDS, HOMEPAGE_MENU_ANI, 'homepage')
-main.process_click('homepage', 'button_product', HOMEPAGE_PRODUCT_COORDS, HOMEPAGE_PRODUCT_ANI , 'product')
+# Áreas clicaveis - carrinho
+main.process_click('carrinho', 'botao_menu', CART_MENU_COORDS, CART_MENU_ANI, 'menu')
+main.process_click('carrinho', 'botao_secao', CART_SECAO_COORDS, CART_SECAO_ANI, 'secao')
+main.process_click('carrinho', 'botao_inicio', CART_INICIO_COORDS, CART_INICIO_ANI, 'inicio')
+main.process_click('carrinho', 'botao_secao', CART_CARRINHO_COORDS, CART_CARRINHO_ANI, 'carrinho')
+main.process_click('carrinho', 'botao_sobre', CART_SOBRE_COORDS, CART_SOBRE_ANI, 'sobre')
 
-# Pagina do Produto 
-main.process_click('product', 'button_menu', PRODUCT_MENU_COORDS, PRODUCT_MENU_ANI , 'homepage')
+# Áreas clicaveis - sobre
+main.process_click('sobre', 'botao_menu', ABOUT_MENU_COORDS, ABOUT_MENU_ANI, 'menu')
+main.process_click('sobre', 'botao_secao', ABOUT_SECAO_COORDS, ABOUT_SECAO_ANI, 'secao')
+main.process_click('sobre', 'botao_inicio', ABOUT_INICIO_COORDS, ABOUT_INICIO_ANI, 'inicio')
+main.process_click('sobre', 'botao_secao', ABOUT_CARRINHO_COORDS, ABOUT_CARRINHO_ANI, 'carrinho')
+main.process_click('sobre', 'botao_sobre', ABOUT_SOBRE_COORDS, ABOUT_SOBRE_ANI, 'sobre')
 
+# Áreas clicaveis - produto
+main.process_click('produto', 'botao_menu', PRODUCT_MENU_COORDS, PRODUCT_MENU_ANI, 'menu')
+main.process_click('produto', 'botao_secao', PRODUCT_SECAO_COORDS, PRODUCT_SECAO_ANI, 'secao')
+main.process_click('produto', 'botao_inicio', PRODUCT_INICIO_COORDS, PRODUCT_INICIO_ANI, 'inicio')
+main.process_click('produto', 'botao_secao', PRODUCT_CARRINHO_COORDS, PRODUCT_CARRINHO_ANI, 'carrinho')
+main.process_click('produto', 'botao_sobre', PRODUCT_SOBRE_COORDS, PRODUCT_SOBRE_ANI, 'sobre')
 
 while True:
     position = main.engine.getMouse()
     x, y = position.getX(), position.getY()
+    print(x, y)
     main.verify_click(x, y)
