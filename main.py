@@ -1,6 +1,5 @@
 from graphics import *
 from config import *
-import csv
 from time import sleep
 
 class ItemManage:
@@ -80,6 +79,7 @@ class Main(Click):
         super().__init__()
         self.engine = GraphWin(TITLE, RESOLUTION[0], RESOLUTION[1])
         self._resolution = RESOLUTION
+        self._fontes = {}
 
     def draw_items(self, position, resolution, path, key):
         items = Image(Point(position[0] + resolution[0] / 2, position[1] + resolution[1] / 2), path)
@@ -87,28 +87,47 @@ class Main(Click):
         if key == self._current_screen:
             items.draw(self.engine)
         
-    def draw_fontes(self):
-        ...
+    def draw_fontes(self, coord, text):
+        for coords in coord: 
+            ...
     
     @property
     def items(self):
         
         return self._items
-
-class FileProduct:
-    def __init__(self):
-        self.matriz = []
-
-    def _open_file(self, path):
-        with open(path, 'r') as file:
-            csv_reader = csv.reader(file)
-
-            for rows in csv_reader:
-                self.matriz.append(rows)
     
-    def _search_product(self, name):
-        for item in self.matriz:
-            ...
+# Em desenvolvimento
+class Product:
+    def __init__(self, lista):
+        self.nome = lista[1]
+        self.preco = lista[2]
+        self.classe = lista[3]
+
+# Em desenvolvimento
+class ManageProduct:
+    def __init__(self, path):
+        self.products = dict()
+        self.path = path
+        self._open_file()
+
+    def open_file(self):
+        with open(self.path, 'r') as file:
+            file = file.readlines()
+            file = [lista.strip().split(';') for lista in file]
+
+            for num, item in enumerate(file):
+                if num != 0:
+                    self.products[item[0]] = item[1:]
+    
+    def save_file(self):
+        with open(self.path, 'w') as file:
+            inicio = ['id', 'nome', 'preco', 'categoria']
+            file.write(';'.join(inicio) + '\n')
+
+            for cod in self.products.keys():
+                produto = self.products[cod]
+                linha = [str(cod), produto.nome, produto.preco, produto.classe]
+                file.write(';'.join(linha) + '\n')
 
 
 main = Main(TITLE, SCREEN_RESOLUTION)
@@ -122,7 +141,7 @@ main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, ABOUT_IMG, 'sobre')
 main.draw_items(DEFAULT_COORDS, SCREEN_RESOLUTION, CART_IMG, 'carrinho')
 
 # Áreas clicaveis - inicio
-main.process_click('inicio', 'botao_menu', HOMEPAGE_MENU_COORDS, HOMEPAGE_MENU_ANI, 'menu')
+main.process_click('inicio', 'botao_menu', HOMEPAGE_MENU_COORDS, HOMEPAGE_MENU_ANI, 'inicio')
 main.process_click('inicio', 'botao_secao', HOMEPAGE_SECAO_COORDS, HOMEPAGE_SECAO_ANI, 'secao')
 main.process_click('inicio', 'botao_inicio', HOMEPAGE_INICIO_COORDS, HOMEPAGE_INICIO_ANI, 'inicio')
 main.process_click('inicio', 'botao_secao', HOMEPAGE_CARRINHO_COORDS, HOMEPAGE_CARRINHO_ANI, 'carrinho')
@@ -133,21 +152,21 @@ main.process_click('inicio', 'produto3', HOMEPAGE_PRODUCT3_COORDS, HOMEPAGE_IMG,
 main.process_click('inicio', 'produto4', HOMEPAGE_PRODUCT4_COORDS, HOMEPAGE_IMG, 'produto')
 
 # Áreas clicaveis - carrinho
-main.process_click('carrinho', 'botao_menu', CART_MENU_COORDS, CART_MENU_ANI, 'menu')
+main.process_click('carrinho', 'botao_menu', CART_MENU_COORDS, CART_MENU_ANI, 'inicio')
 main.process_click('carrinho', 'botao_secao', CART_SECAO_COORDS, CART_SECAO_ANI, 'secao')
 main.process_click('carrinho', 'botao_inicio', CART_INICIO_COORDS, CART_INICIO_ANI, 'inicio')
 main.process_click('carrinho', 'botao_secao', CART_CARRINHO_COORDS, CART_CARRINHO_ANI, 'carrinho')
 main.process_click('carrinho', 'botao_sobre', CART_SOBRE_COORDS, CART_SOBRE_ANI, 'sobre')
 
 # Áreas clicaveis - sobre
-main.process_click('sobre', 'botao_menu', ABOUT_MENU_COORDS, ABOUT_MENU_ANI, 'menu')
+main.process_click('sobre', 'botao_menu', ABOUT_MENU_COORDS, ABOUT_MENU_ANI, 'inicio')
 main.process_click('sobre', 'botao_secao', ABOUT_SECAO_COORDS, ABOUT_SECAO_ANI, 'secao')
 main.process_click('sobre', 'botao_inicio', ABOUT_INICIO_COORDS, ABOUT_INICIO_ANI, 'inicio')
 main.process_click('sobre', 'botao_secao', ABOUT_CARRINHO_COORDS, ABOUT_CARRINHO_ANI, 'carrinho')
 main.process_click('sobre', 'botao_sobre', ABOUT_SOBRE_COORDS, ABOUT_SOBRE_ANI, 'sobre')
 
 # Áreas clicaveis - produto
-main.process_click('produto', 'botao_menu', PRODUCT_MENU_COORDS, PRODUCT_MENU_ANI, 'menu')
+main.process_click('produto', 'botao_menu', PRODUCT_MENU_COORDS, PRODUCT_MENU_ANI, 'inicio')
 main.process_click('produto', 'botao_secao', PRODUCT_SECAO_COORDS, PRODUCT_SECAO_ANI, 'secao')
 main.process_click('produto', 'botao_inicio', PRODUCT_INICIO_COORDS, PRODUCT_INICIO_ANI, 'inicio')
 main.process_click('produto', 'botao_secao', PRODUCT_CARRINHO_COORDS, PRODUCT_CARRINHO_ANI, 'carrinho')
